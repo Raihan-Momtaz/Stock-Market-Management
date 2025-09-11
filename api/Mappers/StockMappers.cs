@@ -3,9 +3,9 @@ using api.Models; // make sure you import your Stock model
 
 namespace api.Mappers
 {
-    public class StockMappers
+    public static class StockMappers
     {
-        public static StockDto ToStockDto(Stock stockModel) 
+        public static StockDto ToStockDto(Stock stockModel)
         {
             return new StockDto
             {
@@ -16,6 +16,20 @@ namespace api.Mappers
                 Industry = stockModel.Industry,
                 MarketCap = stockModel.MarketCap,
                 LastDiv = stockModel.LastDiv
+            };
+        }
+
+        public static Stock ToStockFromCreateDto(this CreateStockRequestDto stockDto)
+        {
+
+            return new Stock
+            {
+                Symbol = stockDto.Symbol,
+                CompanyName = stockDto.CompanyName,
+                Purchase = stockDto.Purchase,
+                Industry = stockDto.Industry,
+                MarketCap = stockDto.MarketCap,
+                LastDiv = stockDto.LastDiv
             };
         }
     }
