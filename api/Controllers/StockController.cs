@@ -6,6 +6,7 @@ using System.Linq;
 using api.Dtos.Stock;
 using Microsoft.EntityFrameworkCore;
 using api.interfaces;
+using api.Helpers;
 
 namespace api.Controllers
 {
@@ -24,9 +25,9 @@ namespace api.Controllers
 
         // GET: api/stock
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] QueryObject query)
         {
-            var stocks = await _stockRepo.GetAllAsync();
+            var stocks = await _stockRepo.GetAllAsync(query);
             var stockDto = stocks.Select(s => StockMappers.ToStockDto(s));
             return Ok(stockDto);
         }
