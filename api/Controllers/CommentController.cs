@@ -32,7 +32,7 @@ namespace api.Controllers
 
             return Ok(commentDto);
         }
-        [HttpGet("{id: int}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -47,7 +47,7 @@ namespace api.Controllers
 
             return Ok(comment.ToCommentDto());
         }
-        [HttpPost("{stockId: int}")]
+        [HttpPost("{stockId:int}")]
 
         public async Task<IActionResult> Create([FromRoute] int stockId, CreateCommentDto commentDto)
         {
@@ -66,7 +66,7 @@ namespace api.Controllers
         }
 
         [HttpPut]
-        [Route("{id : int}")]
+        [Route("{id:int}")]
 
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCommentDto updateDto)
         {
@@ -83,7 +83,7 @@ namespace api.Controllers
         }
 
         [HttpDelete]
-        [Route("{id : int}")]
+        [Route("{id:int}")]
 
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
