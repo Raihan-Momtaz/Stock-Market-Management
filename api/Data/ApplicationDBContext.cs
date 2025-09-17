@@ -14,21 +14,33 @@ namespace api.Data
         public DbSet<Stock> Stock { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder builder)
-    {
-        base.OnModelCreating(builder);
+        public DbSet<Portfolio> Portfolios { get; set; }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
 
-       
-        builder.Entity<IdentityRole>().HasData(
-            new IdentityRole { Id = "1", Name = "Admin", NormalizedName = "ADMIN" },
-            new IdentityRole { Id = "2", Name = "User", NormalizedName = "USER" }
-        );
+            builder.Entity<Portfolio>(x => x.HasKey(p => new { p.AppUserId, p.StockId }));
 
-      
-        builder.Entity<Stock>()
-            .Property(s => s.LastDiv)
-            .HasPrecision(18, 4);
+            builder.Entity<Portfolio>()
+                .HasOne(u => u.AppUser)
+                .WithMany(u => u.Portfolios)
+                .HasForeignKey(p => p.AppUserId);
 
-    }
+            builder.Entity<Portfolio>()
+                .HasOne(u => u.Stock)
+                .WithMany(u => u.Portfolios)
+                .HasForeignKey(p => p.StockId);
+
+            builder.Entity<IdentityRole>().HasData(
+                new IdentityRole { Id = "1", Name = "Admin", NormalizedName = "ADMIN" },
+                new IdentityRole { Id = "2", Name = "User", NormalizedName = "USER" }
+            );
+
+
+            builder.Entity<Stock>()
+                .Property(s => s.LastDiv)
+                .HasPrecision(18, 4);
+
+        }
     }
 }
